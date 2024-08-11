@@ -7,23 +7,25 @@
 
 
 /**
- * create a table for the raw source data
-
-create table refill_data (
-  record_date date primary key, -- date on which readings were taken
-  odometer_mileage integer, -- total miles recorded on the odometer
-  refill_gallons float, -- how many gallons were added to fill the tank
-  trip_mileage float, -- the trip meter or since-refill meter, measuring distance traveled since last refill
-  computer_mpg float, -- the avg MPG as reported on the trip or since-refill meter
-  -- manual_mpg float, -- hand-caculated value of `trip_mileage / refill_gallons`: Moving this to a pipeline stage
-  notes text -- anything of note about the reading, which might impact analytics
-  )
-;
+ * Attach to MotherDuck and make sure we have a database to write to.
+ *
  */
-
 attach 'md:';
-use fleetManagement;
+create database if not exists fleet_management;
+use fleet_management;
 
+/**
+ * Read the raw source data into a table.
+ *
+ * columns
+ *  - record_date date -- date on which readings were taken; should be a primary key
+ *  - odometer_mileage integer -- total miles recorded on the odometer
+ *  - refill_gallons float -- how many gallons were added to fill the tank
+ *  - trip_mileage float -- the trip meter or since-refill meter, measuring distance traveled since last refill
+ *  - computer_mpg float -- the avg MPG as reported on the trip or since-refill meter
+ *  - notes text -- anything of note about the reading, which might impact analytics
+ *
+ */
 create or replace table refill_data
   as (
     select * from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')
@@ -32,6 +34,7 @@ create or replace table refill_data
 
 /**
  * Add calculated values for the reckoned mpg and the variance between mpg readings.
+ *
  */
 create or replace table refill_calculations
   as (
