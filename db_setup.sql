@@ -20,6 +20,10 @@ create table refill_data (
   )
 ;
  */
+
+attach 'md:';
+use fleetManagement;
+
 create or replace table refill_data
   as (
     select * from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')

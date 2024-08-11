@@ -1,8 +1,9 @@
 # Fleet Management Tool
 
-**version:** 0.1
+**version:** 0.1.1
 
-## Version history  
+## Version history
+  - 0.1.1 Converted to use db in Mother Duck cloud service.
   - 0.1 Mileage management to track gas milage for a vehicle, storing data in local duckdb file.
 
 ## Roadmap  
@@ -14,7 +15,7 @@
   - add API readings of odometer and fuel percent and see how those correlate to measured values
    
 ### implementation details
-   - cloud hosted db
+   [x] cloud hosted db
    - reporting UI
      - streamlit
    - import of data by reading image files (visual and metadata)
