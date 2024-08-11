@@ -1,0 +1,5 @@
+record_date,odometer_mileage,refill_gallons,trip_mileage,computer_mpg,notes
+2024-07-19,539,8.128,438.8,57.6,first reading. Not sure when it was refilled vs reset. Data probably not trustworthy below the odometer reading and date
+2024-07-22,1060,9.201,521.4,62,
+2024-07-30,1611,8.763,550.5,65.8,
+2024-08-07,2119,8.686,508,64.4,
