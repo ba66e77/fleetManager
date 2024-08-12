@@ -71,13 +71,18 @@ create or replace table refill_calculations
         computer_mpg - reckoned_mpg
         , 3
       ) as computer_mpg_overstatement, -- a reckoned value of `computer_mpg - reckoned_mpg`, to keep track of how many more miles the computer says were traveled than the calculated value; negative would mean reckoned was greater than computer 
-      avg(computer_mpg_overstatement) 
+      round(
+        avg(computer_mpg_overstatement)
         over(
           partition by "vehicle_id"
           order by record_date asc
           rows between 2 preceding and 0 following
-        ) 
-      as r3_overstatement_average, -- a rolling 3 observation average value of computer_mpg_overstatement
-      computer_mpg_overstatement - r3_overstatement_average as variance_from_r3 -- a raw difference of this reading from the r3 average, to help visualize trends
+        )
+        , 3
+      ) as r3_overstatement_average, -- a rolling 3 observation average value of computer_mpg_overstatement
+      round(
+        computer_mpg_overstatement - r3_overstatement_average
+        , 3
+      ) as variance_from_r3 -- a raw difference of this reading from the r3 average, to help visualize trends
     from refill_data
   );
