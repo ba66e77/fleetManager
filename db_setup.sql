@@ -15,10 +15,21 @@ create database if not exists fleet_management;
 use fleet_management;
 
 /**
+ * Read raw vehicle data into a table.
+ * 
+ */
+create or replace table vehicles
+  as (
+    select *
+    from read_csv('/Users/barrett/Desktop/elantraMileage/vehicles.csv')
+  );
+
+/**
  * Read the raw source data into a table.
  *
  * columns
- *  - record_date date -- date on which readings were taken; should be a primary key
+ *  - vehicle_id -- unique identifier of the vehicle; should be part of primary key
+ *  - record_date datetime -- datetime on which readings were taken; should be part of primary key
  *  - odometer_mileage integer -- total miles recorded on the odometer
  *  - refill_gallons float -- how many gallons were added to fill the tank
  *  - trip_mileage float -- the trip meter or since-refill meter, measuring distance traveled since last refill
@@ -28,9 +39,7 @@ use fleet_management;
  */
 create or replace table refill_data
   as (
-    select
-      'T1892200' as vehicle_id, -- make-do since my data doesn't have vehicle IDs and I only have one to manage
-      *
+    select *
     from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')
   );
 
