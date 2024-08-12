@@ -17,6 +17,16 @@ use fleet_management;
 /**
  * Read raw vehicle data into a table.
  * 
+ * columns
+ *  - vehicle_id -- unique identifier of the vehicle; currently using tag number
+ *  - make
+ *  - model
+ *  - year
+ *
+ * @todo
+ *  - handle unregistered vehicles or vehicles where a state has the same tag number as another state; maybe also international vehicles, someday?
+ *  - add trim identifier, as different trim packages have different base milage
+ *  - maybe add base milage expected from manufacturer?
  */
 create or replace table vehicles
   as (
@@ -40,6 +50,7 @@ create or replace table vehicles
 create or replace table refill_data
   as (
     select *
+    replace (strptime(record_date, '%Y-%m-%d %H:%M')  as record_date) -- cast record_date into a datetime
     from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')
   );
 
