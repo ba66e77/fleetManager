@@ -28,7 +28,10 @@ use fleet_management;
  */
 create or replace table refill_data
   as (
-    select * from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')
+    select
+      'T1892200' as vehicle_id, -- make-do since my data doesn't have vehicle IDs and I only have one to manage
+      *
+    from read_csv('/Users/barrett/Desktop/elantraMileage/refill_readings.csv')
   );
 
 
@@ -49,8 +52,10 @@ create or replace table refill_calculations
         , 3
       ) as computer_mpg_overstatement, -- a reckoned value of `computer_mpg - reckoned_mpg`, to keep track of how many more miles the computer says were traveled than the calculated value; negative would mean reckoned was greater than computer 
       avg(computer_mpg_overstatement) 
-        over( 
-          order by record_date rows between 2 preceding and 0 following 
+        over(
+          partition by "vehicle_id"
+          order by record_date asc
+          rows between 2 preceding and 0 following
         ) 
       as r3_overstatement_average, -- a rolling 3 observation average value of computer_mpg_overstatement
       computer_mpg_overstatement - r3_overstatement_average as variance_from_r3 -- a raw difference of this reading from the r3 average, to help visualize trends
