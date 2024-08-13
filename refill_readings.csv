@@ -6,4 +6,4 @@ T1892200,2024-08-07 20:55,2119,8.686,508,64.4,
 7ERD49,2024-06-16 12:19,132160,10.522,353.8,33.1,
 7ERD49,2024-06-24 16:30,132530,10.6,370.4,36,
 7ERD49,2024-06-30 15:03,132880,9.833,349.7,36.6,
-7ERD49,2024-07-05 18:46,133240,10.676,360.8,,did not capture computer MPG. Odoreading appears truncated in photo. Correcting with calculated values
+7ERD49,2024-07-05 18:46,133240,10.676,360.8,34.84,did not capture computer MPG; imputing using reckoned value plus average overstatement for the vehicle. Odoreading appears truncated in photo. Correcting with calculated values
